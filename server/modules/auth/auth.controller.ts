@@ -33,7 +33,7 @@ export const signIn = async (req: Request, res: Response) => {
 
       const authorities = [];
 
-      req.session?.token = token;
+      req.session!.token = token;
 
       res.status(200).send({
         id: user._id,

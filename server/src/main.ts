@@ -4,7 +4,7 @@ import express, {
   Request,
   Response,
 } from 'express';
-import { connectToDatabase, disconnectFromDatabase } from '../utils/database';
+import { connectToDatabase, disconnectFromDatabase } from '../db/database';
 import cors from 'cors';
 import helmet from 'helmet';
 import cookieSession from 'cookie-session';

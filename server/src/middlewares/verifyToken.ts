@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt, { GetPublicKeyOrSecret, Secret } from 'jsonwebtoken';
-import { connectToDatabase } from '../../utils/database';
+import { connectToDatabase } from '../../db/database';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -17,7 +17,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     if (err) {
       return res.status(401).send({ message: 'Unauthorized!' });
     }
-    req.userId = decoded.id;
+    req.user = decoded.id;
     next();
   });
 };
