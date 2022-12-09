@@ -1,10 +1,12 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const DB_CONNECTION_STRING = process.env.MONGODB_URL || '';
 
 export async function connectToDatabase() {
   try {
-    mongoose.set('strictQuery', false)
+    mongoose.set('strictQuery', false);
     await mongoose.connect(DB_CONNECTION_STRING);
     // Mensagem de log
     console.info('Conectado ao banco de dados');

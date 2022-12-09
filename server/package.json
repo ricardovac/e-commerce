@@ -5,16 +5,19 @@
   "main": "app.js",
   "scripts": {
     "test": "jest",
-    "dev": "env-cmd -f ./config/dev.env ts-node-dev --exit-child --transpile-only src/main.ts",
+    "dev": "ts-node-dev --files --exit-child --transpile-only src/main.ts",
     "start": "node src/app.js"
   },
   "author": "Bassit Owolabi",
   "license": "ISC",
   "dependencies": {
+    "@types/cookie-session": "^2.0.44",
+    "@types/dotenv": "^8.2.0",
     "bcrypt": "^5.1.0",
     "config": "^3.3.8",
-    "cookie-parser": "^1.4.6",
+    "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "express": "^4.17.1",
     "helmet": "^6.0.1",
     "jsonwebtoken": "^8.5.1",
@@ -25,13 +28,12 @@
     "zod": "^3.19.1"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.191",
     "@types/bcrypt": "^5.0.0",
     "@types/config": "^3.3.0",
-    "@types/cookie-parser": "^1.4.3",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.14",
     "@types/jsonwebtoken": "^8.5.9",
+    "@types/lodash": "^4.14.191",
     "@types/validator": "^13.7.10",
     "env-cmd": "^10.1.0",
     "nodemon": "^2.0.12"

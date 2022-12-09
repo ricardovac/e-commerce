@@ -6,12 +6,15 @@ import express, {
 } from 'express';
 import { connectToDatabase, disconnectFromDatabase } from '../utils/database';
 import cors from 'cors';
-import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
+import cookieSession from 'cookie-session';
+import routes from './routes';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
-app.use(cookieParser());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: 'https://localhost:4000',
@@ -20,6 +23,13 @@ app.use(
 );
 
 app.use(helmet()); // aplicacão mais segura configurando headers e escondendo-os.
+app.use(
+  cookieSession({
+    name: 'session',
+    secret: process.env.COOKIE_SECRET,
+    httpOnly: true,
+  })
+);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   const status = err.status || 500;
@@ -35,6 +45,7 @@ const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, async () => {
   await connectToDatabase();
   console.info(`Server listening at https://localhost:${PORT}`);
+  routes(app);
 });
 
 const signals = ['SIGTERM', 'SIGINT'];

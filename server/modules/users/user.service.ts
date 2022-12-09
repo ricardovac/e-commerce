@@ -1,27 +1,31 @@
+import { DocumentDefinition, FilterQuery } from 'mongoose';
 import { omit } from 'lodash';
-import { DocumentDefinition, Error, FilterQuery } from 'mongoose';
-import User, { UserDocument } from './user.model';
+import UserModel, { UserDocument } from './user.model';
 
-export async function createUser(input: DocumentDefinition<UserDocument>) {
+// Registrando um usuário
+export async function createUser(
+  input: DocumentDefinition<
+    Omit<UserDocument, 'createdAt' | 'updatedAt' | 'comparePassword'>
+  >
+) {
   try {
-    return await User.create(input);
-  } catch (error) {
-    throw new Error(error);
-  }
-}
+    // ???
+    const user = await UserModel.create(input);
 
-export async function findUser(query: FilterQuery<UserDocument>) {
-  return User.findOne(query).lean();
+    return omit(user.toJSON(), 'password');
+  } catch (e: any) {
+    throw new Error(e);
+  }
 }
 
 export async function validatePassword({
   email,
   password,
 }: {
-  email: UserDocument['email'];
+  email: string;
   password: string;
 }) {
-  const user = await User.findOne({ email });
+  const user = await UserModel.findOne({ email });
 
   if (!user) {
     return false;
@@ -29,9 +33,11 @@ export async function validatePassword({
 
   const isValid = await user.comparePassword(password);
 
-  if (!isValid) {
-    return false;
-  }
+  if (!isValid) return false;
 
   return omit(user.toJSON(), 'password');
+}
+
+export async function findUser(query: FilterQuery<UserDocument>) {
+  return UserModel.findOne(query).lean();
 }
