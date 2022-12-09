@@ -1,17 +1,18 @@
 import { Express } from 'express';
-import { createUserSchema } from '../modules/users/user.schema';
-import requireUser from './utils/requireUser';
-import validate from './utils/validate';
-import { createUserHandler } from '../modules/users/user.controller';
 import { signIn, signOut } from '../modules/auth/auth.controller';
-import verifyToken from './middlewares/verifyToken';
-import verifyTokenAndAuth from './middlewares/verifyTokenAndAuth';
 import {
   createCart,
-  updateCart,
   deleteCart,
   getCart,
+  updateCart,
 } from '../modules/cart/cart.controller';
+import {
+  createOrder,
+  deleteOrder,
+  getAllOrders,
+  getUserOrder,
+  Income,
+} from '../modules/order/order.controller';
 import {
   createProduct,
   deleteProduct,
@@ -19,6 +20,11 @@ import {
   getProduct,
   updateProduct,
 } from '../modules/product/product.controller';
+import { createUserHandler } from '../modules/users/user.controller';
+import { createUserSchema } from '../modules/users/user.schema';
+import verifyToken from './middlewares/verifyToken';
+import verifyTokenAndAuth from './middlewares/verifyTokenAndAuth';
+import validate from './utils/validate';
 
 const routes = (app: Express) => {
   app.post('/api/users', validate(createUserSchema), createUserHandler);
@@ -36,6 +42,12 @@ const routes = (app: Express) => {
   app.delete('/api/products/:id', verifyToken, deleteProduct);
   app.get('/api/products/find/:id', getProduct);
   app.get('/api/products/find/:id', getAllProduts);
+
+  app.post('/api/order', verifyToken, createOrder);
+  app.put('/api/order/:id', verifyToken, deleteOrder);
+  app.delete('/api/order/find/:userId', verifyToken, getUserOrder);
+  app.get('/api/order', verifyToken, getAllOrders);
+  app.get('/api/order/income', verifyToken, Income);
 };
 
 export default routes;
