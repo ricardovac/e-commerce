@@ -1,7 +1,6 @@
-import { NextFunction, Request, Response } from 'express';
-import jwt, { GetPublicKeyOrSecret, Secret } from 'jsonwebtoken';
-import { connectToDatabase } from '../../db/database';
 import dotenv from 'dotenv';
+import { NextFunction, Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 dotenv.config();
 
 const SECRET = process.env.JWT_SECRET;

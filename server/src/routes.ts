@@ -12,6 +12,13 @@ import {
   deleteCart,
   getCart,
 } from '../modules/cart/cart.controller';
+import {
+  createProduct,
+  deleteProduct,
+  getAllProduts,
+  getProduct,
+  updateProduct,
+} from '../modules/product/product.controller';
 
 const routes = (app: Express) => {
   app.post('/api/users', validate(createUserSchema), createUserHandler);
@@ -19,11 +26,16 @@ const routes = (app: Express) => {
   app.post('/api/login', signIn);
   app.post('/api/login', signOut);
 
-  // Passar o verify
   app.post('/api/cart', verifyToken, createCart);
   app.put('/api/cart/:id', verifyTokenAndAuth, updateCart);
   app.delete('/api/cart/:id', verifyTokenAndAuth, deleteCart);
   app.get('/api/cart/find/:id', verifyTokenAndAuth, getCart);
+
+  app.post('/api/products', verifyToken, createProduct);
+  app.put('/api/products/:id', verifyToken, updateProduct);
+  app.delete('/api/products/:id', verifyToken, deleteProduct);
+  app.get('/api/products/find/:id', getProduct);
+  app.get('/api/products/find/:id', getAllProduts);
 };
 
 export default routes;
