@@ -15,12 +15,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  cors({
-    origin: 'https://localhost:4000',
-    credentials: true,
-  })
-);
+app.use(cors());
 
 app.use(helmet()); // aplicacão mais segura configurando headers e escondendo-os.
 app.use(

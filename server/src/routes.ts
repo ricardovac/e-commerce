@@ -41,7 +41,7 @@ const routes = (app: Express) => {
   app.put('/api/products/:id', verifyToken, updateProduct);
   app.delete('/api/products/:id', verifyToken, deleteProduct);
   app.get('/api/products/find/:id', getProduct);
-  app.get('/api/products/find/:id', getAllProduts);
+  app.get('/api/products', getAllProduts);
 
   app.post('/api/order', verifyToken, createOrder);
   app.put('/api/order/:id', verifyToken, deleteOrder);
